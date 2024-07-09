@@ -1,20 +1,47 @@
+"use server";
 import { redirect } from "next/navigation";
+import { urlLogin } from "../../services/endpoints";
+import { cookies } from "next/headers";
 
 export const login = async (formData) => {
-  "use server";
   try {
-    // const response = await fetch("", { header: {}, body: {} });
+    const email = formData.get("email") ?? "";
+    const password = formData.get("password") ?? "";
 
-    // if (!response.ok) {
-    //   throw new Error(`Response status: ${response.status}`);
-    // }
+    const response = await fetch(urlLogin, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        email: `${email}`,
+        password: `${password}`,
+        twoFactorCode: "string",
+        twoFactorRecoveryCode: "string",
+      }),
+    });
 
-    // const json = await response.json();
-    // console.log(json);
-    
-    console.log(formData.get("email"), formData.get("password"));
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    // const body = JSON.parse(await response.text());
+
+    // cookies().set({
+    //   name: ".AspNetCore.Identity.Application",
+    //   value: `${body["accessToken"]}`,
+    //   path: "/",
+    //   maxAge: 86400,
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: "lax",
+    // });
+    const body = await response;
+    console.log(body);
+
   } catch (error) {
-    console.log(`login error: ${error}`);
+    console.log(`Login ${error}`);
   }
   redirect("/");
 };

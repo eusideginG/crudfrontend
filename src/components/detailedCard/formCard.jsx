@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { titleExist } from "../../../services/validation/textInputValidation";
 
-export default function FormCard(props) {
-  const [title, setTitle] = useState(props.Form.Title);
-  const [description, setDescription] = useState(props.Form.Description);
+export default function FormCard(props = {}) {
+  const [title, setTitle] = useState(props.Form?.Title ?? "");
+  const [description, setDescription] = useState(props.Form?.Description ?? "");
   const [error, setError] = useState(false);
 
   const handleOnChangeTitle = (value) => {
@@ -25,6 +25,8 @@ export default function FormCard(props) {
         value={title}
         onChange={(e) => handleOnChangeTitle(e.target.value)}
         placeholder="Title"
+        minLength={3}
+        required
         className="mb-2 rounded-xl"
       />
       {error && (

@@ -10,6 +10,15 @@ export default function Card(props) {
   const [show, setShow] = useState(false);
   const router = useRouter();
 
+  const handleShow = (e) => {
+    e.preventDefault();
+    setShow(!show);
+  };
+  const handleEdit = (e) => {
+    e.preventDefault();
+    router.push(`details/${props.Form.Id}`);
+  };
+
   return (
     <tr className={`*:break-words ${show ? "" : "*:truncate"}`}>
       <td>{props.Form.Title}</td>
@@ -20,17 +29,18 @@ export default function Card(props) {
         <span className="flex justify-center items-center w-full gap-2 *:w-[30%] *:rounded-full *:py-1 *:px-4">
           <button
             className="flex justify-around items-center bg-gray-500 hover:bg-gray-400 active:bg-gray-300"
-            onClick={() => setShow(!show)}
+            onClick={(e) => handleShow(e)}
           >
-            Show {show ? (
-              <Image src={up} alt="up" className="w-5 h-5"/>
+            Show{" "}
+            {show ? (
+              <Image src={up} alt="up" className="w-5 h-5" />
             ) : (
-              <Image src={down} alt="down" className="w-5 h-5"/>
+              <Image src={down} alt="down" className="w-5 h-5" />
             )}
           </button>
           <button
             className="bg-green-700 hover:bg-green-600 active:bg-green-500"
-            onClick={() => router.push(`details/${props.Form.Id}`)}
+            onClick={(e) => handleEdit(e)}
           >
             Edit
           </button>
@@ -39,7 +49,9 @@ export default function Card(props) {
             className="bg-red-700 hover:bg-red-600 active:bg-red-500 rounded-full"
           >
             <input type="hidden" name="id" value={props.Form.Id} />
-            <button className="">Delete</button>
+            <button type="submit" className="">
+              Delete
+            </button>
           </form>
         </span>
       </td>

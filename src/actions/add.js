@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { urlForm } from "../../services/endpoints";
 
-export const update = async (formData) => {
+export const add = async (formData) => {
   "use server";
 
   try {
@@ -18,26 +18,30 @@ export const update = async (formData) => {
 
     dataNames.map((n, i) => (data[n] = dataValues[i]));
 
-    const response = await fetch(`${urlForm}/${formData.get("id")}`, {
-      header: { id: `${formData.get("id")}` },
+    const response = await fetch(urlForm, {
+      method: "POST",
+      header: {
+        "accept": "*/*",
+        "Content-Type": "application/json",
+      },
+      credentials: 'include',
       body: {
         title: `${title}`,
         description: `${description}`,
         dataValues: { ...data },
       },
     });
+    console.log(await response);
 
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
+console.log("works2");
+    const body = await response.text();
+    console.log(body);
 
-    const json = await response.json();
-
-    console.log(json);
-
-    return json;
   } catch (error) {
-    console.log(`login error: ${error}`);
+    console.log(`Add: ${error}`);
   }
   redirect("/");
 };

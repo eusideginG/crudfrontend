@@ -3,13 +3,15 @@
 import { useState } from "react";
 import { nameExist } from "../../../services/validation/textInputValidation";
 
-export default function FormData(props) {
-  const [data, setData] = useState(props.Data);
+export default function FormData(props = {}) {
+  const [data, setData] = useState(props.Data ?? []);
   const [canAdd, setCanAdd] = useState(data.length < 10);
   const [canRemove, setCanRemove] = useState(data.length > 0);
   const [error, setError] = useState(-1);
 
-  const handleAdd = () => {
+  const handleAdd = (e) => {
+    e.preventDefault();
+
     if (data.length === 9) {
       setCanAdd(false);
     }
@@ -19,7 +21,9 @@ export default function FormData(props) {
     }
   };
 
-  const handleRemove = () => {
+  const handleRemove = (e) => {
+    e.preventDefault();
+
     if (data.length === 1) {
       setCanRemove(false);
     }
@@ -67,6 +71,8 @@ export default function FormData(props) {
                   name={`name-${i}`}
                   placeholder="Name"
                   value={d.Name}
+                  minLength={3}
+                  required
                   onChange={(e) => handleOnNameChange(e.target.value, i)}
                 />
                 <input
@@ -90,14 +96,14 @@ export default function FormData(props) {
       <span className="flex flex-col justify-center items-center *:border-2 *:border-gray-100 *:w-full *:py-1 *:mx-2 *:rounded-full">
         <button
           disabled={!canAdd}
-          onClick={() => handleAdd()}
+          onClick={(e) => handleAdd(e)}
           className="bg-green-500 hover:bg-green-400 active:bg-green-300 disabled:bg-green-100 mb-2"
         >
           Add
         </button>
         <button
           disabled={!canRemove}
-          onClick={() => handleRemove()}
+          onClick={(e) => handleRemove(e)}
           className="bg-red-500 hover:bg-red-400 active:bg-red-300 disabled:bg-red-100"
         >
           Remove

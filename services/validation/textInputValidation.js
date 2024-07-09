@@ -5,7 +5,7 @@ export const nameExist = (data, value) => {
   return false;
 };
 
-export const titleExist = (data, value, id) => {
+export const titleExist = (data = [], value, id) => {
   const res = data.filter((v) => {
     if (v.Title === value) {
       return v.Id !== id

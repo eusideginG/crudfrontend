@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export default function Table({children}) {
     return (
       <div className="flex flex-col items-center w-[80%] py-2 px-8">
@@ -15,6 +17,7 @@ export default function Table({children}) {
               <th>Description</th>
               <th>Created Time</th>
               <th>Updated Time</th>
+              <th className="flex justify-end"><Link href="/add" className="border-2 rounded-full px-4 py-1">Add</Link></th>
             </tr>
           </thead>
           <tbody>

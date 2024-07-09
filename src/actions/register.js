@@ -1,24 +1,29 @@
+"use server";
 import { redirect } from "next/navigation";
+import { urlRegister } from "../../services/endpoints";
 
 export const register = async (formData) => {
-  "use server";
   try {
-    // const response = await fetch("", { header: {}, body: {} });
+    const email = formData.get("email") ?? "";
+    const password = formData.get("password") ?? "";
 
-    // if (!response.ok) {
-    //   throw new Error(`Response status: ${response.status}`);
-    // }
+    const response = await fetch(urlRegister, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: `${email}`,
+        password: `${password}`,
+      }),
+    });
 
-    // const json = await response.json();
-    // console.log(json);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
 
-    console.log(
-      formData.get("email"),
-      formData.get("password"),
-      formData.get("confirm-password")
-    );
   } catch (error) {
-    console.log(`login error: ${error}`);
+    console.log(`Register ${error}`);
   }
   redirect("/");
 };
