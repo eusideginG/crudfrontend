@@ -23,8 +23,8 @@ export default function Card(props) {
     <tr className={`*:break-words ${show ? "" : "*:truncate"}`}>
       <td>{props.Form.Title}</td>
       <td>{props.Form.Description}</td>
-      <td>{props.Form.CreatedTime}</td>
-      <td>{props.Form.UpdatedTime}</td>
+      <td>{new Date(props.Form.CreatedTime).toLocaleString()}</td>
+      <td>{new Date(props.Form.UpdatedTime).toLocaleString()}</td>
       <td className="max-w-[28%]">
         <span className="flex justify-center items-center w-full gap-2 *:w-[30%] *:rounded-full *:py-1 *:px-4">
           <button

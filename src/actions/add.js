@@ -18,28 +18,28 @@ export const add = async (formData) => {
 
     dataNames.map((n, i) => (data[n] = dataValues[i]));
 
+    const reqBody = JSON.stringify({
+      title: `${title}`,
+      description: `${description}`,
+      dataValues: { ...data },
+    });
+    console.log(reqBody);
     const response = await fetch(urlForm, {
       method: "POST",
-      header: {
-        "accept": "*/*",
+      headers: {
         "Content-Type": "application/json",
       },
-      credentials: 'include',
-      body: {
-        title: `${title}`,
-        description: `${description}`,
-        dataValues: { ...data },
-      },
+      // credentials: 'include',
+      body: reqBody,
     });
-    console.log(await response);
 
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
-console.log("works2");
-    const body = await response.text();
-    console.log(body);
 
+    const body = await response.text();
+    console.log("body:", body);
+    console.log("request:", response);
   } catch (error) {
     console.log(`Add: ${error}`);
   }

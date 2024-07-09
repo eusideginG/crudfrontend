@@ -13,7 +13,6 @@ export const login = async (formData) => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: 'include',
       body: JSON.stringify({
         email: `${email}`,
         password: `${password}`,
