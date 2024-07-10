@@ -6,7 +6,6 @@ export const get = async () => {
   try {
     const response = await fetch(urlForm, {
       method: "GET",
-      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
