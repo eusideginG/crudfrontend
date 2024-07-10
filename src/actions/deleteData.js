@@ -3,16 +3,18 @@
 import { redirect } from "next/navigation";
 import { urlForm } from "../../services/endpoints";
 
-export const deleteForm = async (formData) => {
-  const id = formData.get("id");
+export const deleteFormData = async (formId = "", dataId = []) => {
+  const id = formId;
+  const url = `${urlForm}/${id}`;
 
   try {
-    const response = await fetch(`${urlForm}/${id}`, {
+    const response = await fetch(url, {
       method: "DELETE",
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify([...dataId]),
     });
 
     if (!response.ok) {

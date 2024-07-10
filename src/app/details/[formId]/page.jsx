@@ -3,7 +3,7 @@ import { update } from "@/actions/update";
 import FormCard from "@/components/detailedCard/formCard";
 import FormData from "@/components/detailedCard/formData";
 import { get } from "@/actions/get";
-import { deleteForm } from "@/actions/delete";
+import { deleteFormData } from "@/actions/deleteData";
 
 let disabled = true;
 export default async function Details(props) {
@@ -14,7 +14,7 @@ export default async function Details(props) {
   const handleFormAction = async (data) => {
     "use server";
 
-    const response = await deleteForm(null, formId, data);
+    const response = await deleteFormData(formId, data);
     console.log(response);
 
     console.log(data);
@@ -30,7 +30,7 @@ export default async function Details(props) {
         <div className="flex justify-between items-start w-full border-b-2 mb-4 pb-2 border-gray-100 h-full">
           <FormCard Form={form} Data={forms} Id={formId} />
           <FormData
-            Data={form.FormData}
+            Data={form?.FormData}
             Id={formId}
             Selected={(selected) => {
               "use server";
