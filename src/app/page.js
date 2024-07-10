@@ -1,30 +1,20 @@
-"use client";
-import { urlForm } from "../../services/endpoints";
 import Card from "@/components/card/card";
 import Table from "@/components/card/table";
-import { useState, useEffect } from "react";
+import { Suspense } from "react";
+import { get } from "@/actions/get";
 
-export default function Home() {
-  const [forms, setForms] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(urlForm)
-      .then((res) => res.json())
-      .then((data) => {
-        setForms(data);
-        setLoading(false);
-      });
-  }, []);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No profile data</p>;
+export default async function Home() {
+  const forms = await get() ?? [];
 
   return (
     <main className="min-w-full flex flex-col items-center">
       <Table>
         {forms.map((form) => {
-          return <Card key={form.Id} Form={form} />;
+          return (
+            <Suspense key={form.Id} fallback={<p>Loading card...</p>}>
+              <Card Form={form} />
+            </Suspense>
+          );
         })}
       </Table>
     </main>

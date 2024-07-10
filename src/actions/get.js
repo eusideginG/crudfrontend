@@ -9,16 +9,12 @@ export const get = async () => {
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-store",
     });
 
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-
     const body = await response.json();
-    return(body);
-
+    return body;
   } catch (error) {
-    console.log(`Login ${error}`);
+    console.log(`Get ${error}`);
   }
 };
