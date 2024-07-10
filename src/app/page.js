@@ -12,7 +12,7 @@ export default function Home() {
     fetch(urlForm)
       .then((res) => res.json())
       .then((data) => {
-        setData(data);
+        setForms(data);
         setLoading(false);
       });
   }, []);
