@@ -11,7 +11,7 @@ export default function Add() {
       >
         <div className="flex justify-between items-start w-full border-b-2 mb-4 pb-2 border-gray-100">
           <FormCard />
-          <FormData />
+          <FormData Type="Add"/>
         </div>
         <button
           type="submit"

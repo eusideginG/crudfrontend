@@ -1,7 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
 import { urlLogin } from "../../services/endpoints";
-import { cookies } from "next/headers";
 
 export const login = async (formData) => {
   try {

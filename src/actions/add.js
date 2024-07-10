@@ -23,13 +23,12 @@ export const add = async (formData) => {
       description: `${description}`,
       dataValues: { ...data },
     });
-    console.log(reqBody);
+    
     const response = await fetch(urlForm, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      // credentials: 'include',
       body: reqBody,
     });
 

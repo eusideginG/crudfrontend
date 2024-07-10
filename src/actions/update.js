@@ -18,26 +18,28 @@ export const update = async (formData) => {
 
     dataNames.map((n, i) => (data[n] = dataValues[i]));
 
+    const reqBody = JSON.stringify({
+      title: `${title}`,
+      description: `${description}`,
+      dataValues: { ...data },
+    });
+    
     const response = await fetch(`${urlForm}/${formData.get("id")}`, {
-      header: { id: `${formData.get("id")}` },
-      body: {
-        title: `${title}`,
-        description: `${description}`,
-        dataValues: { ...data },
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: reqBody,
     });
 
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
+    
+    console.log("Request status:", response.status);
 
-    const json = await response.json();
-
-    console.log(json);
-
-    return json;
   } catch (error) {
-    console.log(`login error: ${error}`);
+    console.log(`Update: ${error}`);
   }
   redirect("/");
 };
